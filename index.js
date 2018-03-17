@@ -5,16 +5,11 @@ const {
 } = require('./config.json');
 const axios = require('axios');
 const {
-  buildSearch
+  buildSearch,
+  help
 } = require('./botCommands.js')
 
 
-
-var scrapy = require('node-scrapy'),
-  url = 'http://www.probuilds.net/champions/details/annie',
-  model = {
-    item: '.item-name'
-  }
 
 
 
