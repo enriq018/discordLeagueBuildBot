@@ -2,12 +2,10 @@ const scrapy = require('node-scrapy');
 const champNames = require('./champNames.js');
 
 const modelBuild = { item: '.item-name' };
-// const modelList = { list: '.champion-name garamond' }
 
 const botCommands = {};
 
 const validName = (champ) => {
-  // console.log('checking if name is valid', champ)
   const exsist = champNames.filter(el => el === champ).length === 1;
   if (exsist) {
     return true;
@@ -24,7 +22,6 @@ const validName = (champ) => {
 };
 
 botCommands.buildSearch = (champ, callback) => {
-  // console.log(validName(champ));
   const valid = validName(champ);
   if (valid === true) {
     const url = `http://www.probuilds.net/champions/details/${champ}`;
