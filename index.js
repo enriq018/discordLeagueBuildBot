@@ -6,6 +6,7 @@ const {
 const axios = require('axios');
 const {
   buildSearch,
+  list,
   help
 } = require('./botCommands.js')
 
@@ -31,23 +32,23 @@ client.on('ready', () => {
 
 });
 
-//get list of all names for my dyslexic
-
-
 client.on('message', message => {
   //optimize later.
   if(message.content[0] === '!') {
     if (message.content === '!buildBot list') {
       //api request
       list(data => message.channel.send(data))
+    } else {
+      let champ = champName(message.content)
+      if (champ) {
+        console.log('!!!!!', champ)
+        buildSearch(champ.toLowerCase(), (data) => message.channel.send(data))
+      }
+
     }
     if (message.content === '!buildBot') {
+      console.log('help')
       help(data => message.channel.send(data))
-    }
-    let champ = champName(message.content)
-    if (champ) {
-      console.log('!!!!!', champ)
-      buildSearch(champ, (data) => message.channel.send(data))
     }
   }
 
