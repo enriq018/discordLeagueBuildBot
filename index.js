@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
-const { token } = require('./config.json');
+// const { token } = require('./config.json');
 const { buildSearch, list, help } = require('./botCommands.js');
 
 console.log('starting bot server...');
@@ -32,5 +34,6 @@ client.on('message', (message) => {
   }
 });
 
-client.login(token);
+client.login(process.env.token);
+// client.login(token);
 
