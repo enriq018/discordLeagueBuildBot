@@ -1,32 +1,36 @@
 const Discord = require('discord.js');
+
 const client = new Discord.Client();
 const { token } = require('./config.json');
-const axios = require('axios');
+const { buildSearch, list, help } = require('./botCommands.js');
 
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+console.log('starting bot server...');
+
+const champName = msg => (msg.split(' ')[1]);
 
 client.on('ready', () => {
-    console.log('Ready!');
+  console.log('Bot is ready!');
 });
 
-client.on('message', message => {
-  //message content is what the bot will look for
-  if (message.content === '!') {
-    //api request
-    axios.get('http://www.reddit.com/r/quotes/top/.json?count=5')
-    .then((response) => {
-      let info = response.data.data.children[getRandomInt(0,6)].data.title;
-      //bot message to the channel
-      message.channel.send(JSON.stringify(info))
-    })
-    .catch((error) => {
-      message.channel.send('Damn Chin...Something didn\'t work');
-    });
+client.on('message', (message) => {
+  /* Check any discord message to see if bot is being pinged */
+  if (message.content[0] === '!') {
+    /* Check for list request */
+    if (message.content === '!buildBot list') {
+      list(data => message.channel.send(data));
+    } else {
+      /* Get typed champion name and pass it to buildSearch bot command */
+      const champ = champName(message.content);
+      if (champ) {
+        buildSearch(champ.toLowerCase(), data => message.channel.send(data));
+      }
+    }
+    /* If nothing besides !buildBot was typed, return the help blurb */
+    if (message.content === '!buildBot') {
+      help(data => message.channel.send(data));
+    }
   }
 });
 
 client.login(token);
+
