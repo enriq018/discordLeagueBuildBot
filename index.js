@@ -48,7 +48,7 @@ client.on('message', (message) => {
         list(data => message.channel.send(data));
       } else {
       /* Send back similarly spelt champs */
-        const similarChamps = didYouMean(champ);
+        const similarChamps = didYouMean(champ.slice(0, 2));
         message.channel.send(similarChamps);
       }
     } else {
