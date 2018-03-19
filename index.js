@@ -10,6 +10,7 @@ console.log('starting bot server...');
 
 const champName = msg => (msg.split(' ')[1]);
 
+
 client.on('ready', () => {
   console.log('Bot is ready!');
 });
@@ -18,17 +19,25 @@ client.on('message', (message) => {
   /* Check any discord message to see if bot is being pinged */
   if (message.content[0] === '!') {
     /* Check for list request */
-    if (message.content === '!buildBot list') {
+    if (message.content === '! list') {
       list(data => message.channel.send(data));
     } else {
       /* Get typed champion name and pass it to buildSearch bot command */
       const champ = champName(message.content);
       if (champ) {
-        buildSearch(champ.toLowerCase(), data => message.channel.send(data));
+        // buildSearch(champ.toLowerCase(), data => message.channel.send(data));
+        buildSearch(champ.toLowerCase(), (data) => {
+          // console.log(typeof data)
+          if (typeof data === 'string') {
+            message.channel.send(data);
+          } else {
+            message.channel.send(`${champ}'s build`, { files: ['./build.png'] });
+          }
+        });
       }
     }
     /* If nothing besides !buildBot was typed, return the help blurb */
-    if (message.content === '!buildBot') {
+    if (message.content === '!') {
       help(data => message.channel.send(data));
     }
   }
