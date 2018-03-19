@@ -1,13 +1,11 @@
 const webshot = require('webshot');
 
-
-const options = {};
-options.windowSize = { width: 1024, height: 768 };
-options.shotSize = { width: 'all', height: 'all' };
-options.siteType = 'url';
-// options.renderDelay = 1000;
-options.defaultWhiteBackground = true;
-
+const options = {
+  windowSize: { width: 1024, height: 768 },
+  shotSize: { width: 'all', height: 'all' },
+  siteType: 'url',
+  defaultWhiteBackground: true,
+};
 
 const screenshot = (champ, callback) => {
   console.log('about to attempt screenshot of ', champ);
@@ -15,10 +13,10 @@ const screenshot = (champ, callback) => {
   webshot(url, 'build.png', options, (err) => {
     if (err) {
       console.log('screenshot error');
-      callback(false);
+      callback();
     }
     console.log('pic downloaded');
-    callback(true);
+    callback();
   });
 };
 
