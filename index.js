@@ -3,12 +3,25 @@ require('dotenv').config();
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
-// const { token } = require('./config.json');
-const { buildSearch, list, help } = require('./botCommands.js');
+const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
+const champNames = require('./champNames.js');
+
+const validName = (champ) => {
+  return champNames.filter(el => el === champ).length === 1;
+};
+
+const didYouMean = (champ) => {
+  const matches = [];
+  champNames.forEach((el) => {
+    if (el.includes(champ)) {
+      matches.push(el);
+    }
+  });
+  return `did you mean ${matches.join(', or ')}?`;
+};
+
 
 console.log('starting bot server...');
-
-const champName = msg => (msg.split(' ')[1]);
 
 client.on('ready', () => {
   console.log('Bot is ready!');
@@ -17,23 +30,32 @@ client.on('ready', () => {
 client.on('message', (message) => {
   /* Check any discord message to see if bot is being pinged */
   if (message.content[0] === '!') {
-    /* Check for list request */
-    if (message.content === '!buildBot list') {
-      list(data => message.channel.send(data));
-    } else {
-      /* Get typed champion name and pass it to buildSearch bot command */
-      const champ = champName(message.content);
-      if (champ) {
-        buildSearch(champ.toLowerCase(), data => message.channel.send(data));
+    const msg = message.content.split(' ');
+    /* If only ! was sent, reply with help */
+    if (msg.length > 1) {
+      const champ = msg[1].toLowerCase();
+      /* Check to see if champion name was valid OR 'list' */
+      const valid = validName(champ);
+      if (valid) {
+        /* Make unique lines for specific champs later */
+        if (champ === 'urgot') { message.channel.send('Aye Mr One Trick Himself!'); }
+        /* Update user that we are working on their request */
+        setTimeout(() => message.channel.send(randomWaitPhrase(champ)), 2500);
+        /* Begin webscraping & screenshot process */
+        buildSearch(champ, data => message.channel.send(`${data}`, { files: ['./build.png'] }));
+      } else if (champ === 'list') {
+      /* Send back list of valid champ names */
+        list(data => message.channel.send(data));
+      } else {
+      /* Send back similarly spelt champs */
+        const similarChamps = didYouMean(champ);
+        message.channel.send(similarChamps);
       }
-    }
-    /* If nothing besides !buildBot was typed, return the help blurb */
-    if (message.content === '!buildBot') {
+    } else {
+      /* Send back bot command info */
       help(data => message.channel.send(data));
     }
   }
 });
 
 client.login(process.env.token);
-// client.login(token);
-
