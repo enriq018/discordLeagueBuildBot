@@ -34,9 +34,9 @@ botCommands.randomWaitPhrase = (champ) => {
     ':)', `searching ${champ}`, 'And now, the strength of the Black Panther will be STRIPPED AWAY', 'okie dokie Dr.Jones!', 'Just putting on the finishing touches'];
 
   const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
   };
 
   return phrases[getRandomInt(0, phrases.length + 1)];
