@@ -30,8 +30,9 @@ botCommands.help = (callback) => {
 botCommands.randomWaitPhrase = (champ) => {
   /* Break phrases into seperate text file later */
   const phrases = [`Almost done looking up ${champ}`, `Getting ${champ}'s info...`,
-    `${champ} build will be posted shortly`, 'Unlike Chris, I tell you how long i\'ll take to do things! 5 secs', '...',
-    ':)', `searching ${champ}`, 'And now, the strength of the Black Panther will be STRIPPED AWAY', 'okie dokie Dr.Jones!', 'Just putting on the finishing touches'];
+    `${champ} build will be posted shortly`, 'Unlike Chris, I tell you how long i\'ll take to do things! 5 secs', 'You got it!',
+    ':)', `searching ${champ}`, 'And now, the strength of the Black Panther will be STRIPPED AWAY', 'okie dokie Dr.Jones!', 'Just putting on the finishing touches',
+    'jump jump the house is jumping', 'this is how we do it', 'dont tilt!', 'toxic free is the way to be'];
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);

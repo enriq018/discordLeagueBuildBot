@@ -7,7 +7,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
 const champNames = require('./champNames.js');
-const app = express()
+const app = express();
 
 const validName = (champ) => {
   return champNames.filter(el => el === champ).length === 1;
@@ -72,8 +72,9 @@ setInterval(() => {
       console.log('err on request', error);
     }
     console.log('statusCode:', response.statusCode);
+    console.log('Keeping bot awake!')
 });
-}, 6000);
+}, 300000);
 
 
 app.listen(process.env.PORT, () => console.log('Example app listening on', process.env.PORT));
