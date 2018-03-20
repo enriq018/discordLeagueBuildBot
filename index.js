@@ -21,7 +21,7 @@ const didYouMean = (champ) => {
 };
 
 
-console.log('starting bot server...');
+console.log('starting bot on following server: ', process.env.current);
 
 client.on('ready', () => {
   console.log('Bot is ready!');
