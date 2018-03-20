@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const express = require('express')
+const express = require('express');
+const request = require('request');
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
@@ -21,11 +22,6 @@ const didYouMean = (champ) => {
   });
   return `did you mean ${matches.join(', or ')}?`;
 };
-
-
-
-
-
 
 console.log('starting bot server...', process.env.current);
 
@@ -66,5 +62,18 @@ client.on('message', (message) => {
 
 client.login(process.env.token);
 
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
 
-app.listen(process.env.PORT, () => console.log('Example app listening on', process.env.PORT))
+setInterval(() => {
+  request('https://discord-build-bot.herokuapp.com/', (error, response) => {
+    if (error) {
+      console.log('err on request', error);
+    }
+    console.log('statusCode:', response.statusCode);
+});
+}, 6000);
+
+
+app.listen(process.env.PORT, () => console.log('Example app listening on', process.env.PORT));
