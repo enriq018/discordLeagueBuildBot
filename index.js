@@ -72,7 +72,7 @@ setInterval(() => {
       console.log('err on request', error);
     }
     console.log('statusCode:', response.statusCode);
-    console.log('Keeping bot awake!')
+    console.log('Keeping bot awake!');
 });
 }, 300000);
 
