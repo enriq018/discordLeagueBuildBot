@@ -3,10 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const request = require('request');
 const Discord = require('discord.js');
+const champNames = require('./champNames.js');
+const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
 
 const client = new Discord.Client();
-const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
-const champNames = require('./champNames.js');
 const app = express();
 
 const validName = (champ) => {
