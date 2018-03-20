@@ -1,5 +1,5 @@
 const webshot = require('webshot');
-
+const path = require('path')
 const options = {
   windowSize: { width: 1024, height: 768 },
   shotSize: { width: 'all', height: 'all' },
@@ -7,10 +7,11 @@ const options = {
   defaultWhiteBackground: true,
 };
 
+const fileLocation = path.resolve(__dirname, 'build.png');
 const screenshot = (champ, callback) => {
   console.log('about to attempt screenshot of ', champ);
   const url = `http://champion.gg/champion/${champ}`;
-  webshot(url, 'build.png', options, (err) => {
+  webshot(url, fileLocation, options, (err) => {
     if (err) {
       console.log('screenshot error');
       callback();
@@ -20,4 +21,5 @@ const screenshot = (champ, callback) => {
   });
 };
 
+console.log(fileLocation)
 module.exports = screenshot;

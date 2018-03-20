@@ -5,6 +5,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
 const champNames = require('./champNames.js');
+const path = require('path')
+
 
 const validName = (champ) => {
   return champNames.filter(el => el === champ).length === 1;
@@ -19,6 +21,8 @@ const didYouMean = (champ) => {
   });
   return `did you mean ${matches.join(', or ')}?`;
 };
+
+const fileLocation = path.resolve(__dirname, 'build.png');
 
 
 console.log('starting bot server...');
@@ -42,7 +46,7 @@ client.on('message', (message) => {
         /* Update user that we are working on their request */
         setTimeout(() => message.channel.send(randomWaitPhrase(champ)), 2500);
         /* Begin webscraping & screenshot process */
-        buildSearch(champ, data => message.channel.send(`${data}`, { files: ['./build.png'] }));
+        buildSearch(champ, data => message.channel.send(`${data}`, { files: [fileLocation] }));
       } else if (champ === 'list') {
       /* Send back list of valid champ names */
         list(data => message.channel.send(data));
