@@ -1,10 +1,12 @@
 require('dotenv').config();
 
+const express = require('express')
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
 const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
 const champNames = require('./champNames.js');
+const app = express()
 
 const validName = (champ) => {
   return champNames.filter(el => el === champ).length === 1;
@@ -19,6 +21,10 @@ const didYouMean = (champ) => {
   });
   return `did you mean ${matches.join(', or ')}?`;
 };
+
+
+
+
 
 
 console.log('starting bot server...', process.env.current);
@@ -59,3 +65,6 @@ client.on('message', (message) => {
 });
 
 client.login(process.env.token);
+
+
+app.listen(process.env.PORT, () => console.log('Example app listening on', process.env.PORT))
