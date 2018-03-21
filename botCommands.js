@@ -64,7 +64,7 @@ botCommands.list = (callback) => {
 };
 
 botCommands.help = (callback) => {
-  const text = 'My commands (so far) :\n\n! <Champion Name> : Popular build items for champ. Example: ! Lux\n\n! list : List of all champ names according to probuilds since not all of us can spell correctly';
+  const text = 'My commands (so far) :\n\n! Champion Name : Popular build items for champ. Example: ! Lux\n\n! list : List of all champ names according to probuilds since not all of us can spell correctly\n\n! <account name> : Display your recent game stats';
   callback(text);
 };
 
