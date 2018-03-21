@@ -5,9 +5,8 @@ const { screenShot } = require('./screenShot.js');
 
 const modelBuild = { item: '.item-name' };
 const ggBuild = { results: '.GameResult' };
-
+const fifthBuild = { users: '.entry-title' };
 const botCommands = {};
-
 
 const ggHelper = (array) => {
   const results = Array.isArray(array) ? array : [];
@@ -16,7 +15,6 @@ const ggHelper = (array) => {
   const streakType = results[0];
   let streakCount = 0;
   let streak = true;
-
 
   results.forEach((el, i) => {
     if (el !== 'Remake') {
@@ -30,7 +28,7 @@ const ggHelper = (array) => {
         streakCount += 1;
       } else {
         streak = false;
-      };
+      }
     }
   });
   return `${recentWins} - ${5 - recentWins} in last 5 games\n${allWins} - ${results.length - allWins} in last ${results.length} games\nOn a ${streakCount} game ${streakType === 'Victory' ? 'winning' : 'losing'} streak`;
@@ -59,12 +57,22 @@ botCommands.gg = (name, callback) => {
   });
 };
 
+botCommands.fifth = (callback) => {
+  const url = 'http://lfg-od.com/lol-lfg/';
+  scrapy.scrape(url, fifthBuild, (err, data) => {
+    if (err) return console.error(err);
+    const randos = [];
+    data.users.forEach((el, i) => randos.push(`${i + 1}) ${el}`));
+    return callback(randos.join('\n'));
+  });
+};
+
 botCommands.list = (callback) => {
   callback(champNames);
 };
 
 botCommands.help = (callback) => {
-  const text = 'My commands (so far) :\n\n! Champion Name : Popular build items for champ. Example: ! Lux\n\n! list : List of all champ names according to probuilds since not all of us can spell correctly\n\n! <account name> : Display your recent game stats';
+  const text = 'My commands (so far) :\n\n! Champion Name : Popular build items for champ. Example: ! Lux\n\n! list : List of all champ names according to probuilds since not all of us can spell correctly\n\n! <account name> : Display your recent game stats\n\n! fifth : list random players names for when we need a fifth';
   callback(text);
 };
 
@@ -73,7 +81,7 @@ botCommands.randomWaitPhrase = (champ) => {
   const phrases = [`Almost done looking up ${champ}`, `Getting ${champ}'s info...`,
     `${champ} build will be posted shortly`, 'Unlike Chris, I tell you how long i\'ll take to do things! 5 secs', 'You got it!',
     ':)', `searching ${champ}`, 'And now, the strength of the Black Panther will be STRIPPED AWAY', 'okie dokie Dr.Jones!', 'Just putting on the finishing touches',
-    'jump jump the house is jumping', 'this is how we do it', 'dont tilt!', 'toxic free is the way to be'];
+    'jump jump the house is jumping', 'this is how we do it', 'dont tilt!', 'toxic free is the way to be', 'plz work', 'bots op!'];
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
