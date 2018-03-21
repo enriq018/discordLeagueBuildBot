@@ -83,5 +83,5 @@ botCommands.randomWaitPhrase = (champ) => {
 
   return phrases[getRandomInt(0, phrases.length + 1)];
 };
-console.log(screenShot)
+
 module.exports = botCommands;
