@@ -4,7 +4,7 @@ const express = require('express');
 const request = require('request');
 const Discord = require('discord.js');
 const champNames = require('./champNames.js');
-const { buildSearch, list, help, randomWaitPhrase } = require('./botCommands.js');
+const { buildSearch, gg, list, help, randomWaitPhrase } = require('./botCommands.js');
 
 const client = new Discord.Client();
 const app = express();
@@ -35,6 +35,13 @@ client.on('message', (message) => {
     const msg = message.content.split(' ');
     /* If only ! was sent, reply with help */
     if (msg.length > 1) {
+      if (message.content[2] === '<' && message.content[message.content.length - 1] === '>') {
+        const name = message.content.slice(3, -1).split(' ').join('%20');
+        const rawName = message.content.slice(3, -1);
+        setTimeout(() => message.channel.send(randomWaitPhrase('personal stats')), 2500);
+        gg(name, data => message.channel.send(`${rawName} is:\n${data}`, { files: ['./gg.png'] }));
+        return;
+      }
       const champ = msg[1].toLowerCase();
       /* Check to see if champion name was valid OR 'list' */
       const valid = validName(champ);
@@ -78,3 +85,4 @@ setInterval(() => {
 
 
 app.listen(process.env.PORT, () => console.log('Example app listening on', process.env.PORT));
+// app.listen(3000, () => console.log('Example app listening on', 3000));

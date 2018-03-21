@@ -1,19 +1,60 @@
 const scrapy = require('node-scrapy');
 const champNames = require('./champNames.js');
 
-const screenShot = require('./screenShot.js');
+const { screenShot } = require('./screenShot.js');
 
 const modelBuild = { item: '.item-name' };
+const ggBuild = { results: '.GameResult' };
 
 const botCommands = {};
 
+
+const ggHelper = (array) => {
+  const results = Array.isArray(array) ? array : [];
+  let allWins = 0;
+  let recentWins = 0;
+  const streakType = results[0];
+  let streakCount = 0;
+  let streak = true;
+
+
+  results.forEach((el, i) => {
+    if (el !== 'Remake') {
+      if (el === 'Victory' && i < 5) {
+        recentWins += 1;
+      }
+      if (el === 'Victory') {
+        allWins += 1;
+      }
+      if (streak && el === streakType) {
+        streakCount += 1;
+      } else {
+        streak = false;
+      };
+    }
+  });
+  return `${recentWins} - ${5 - recentWins} in last 5 games\n${allWins} - ${results.length - allWins} in last ${results.length} games\nOn a ${streakCount} game ${streakType === 'Victory' ? 'winning' : 'losing'} streak`;
+};
+
 botCommands.buildSearch = (champ, callback) => {
-  const url = `http://www.probuilds.net/champions/details/${champ}`;
+  let url = `http://www.probuilds.net/champions/details/${champ}`;
   scrapy.scrape(url, modelBuild, (err, data) => {
     if (err) return console.error(err);
-    return screenShot(champ, () => {
+    url = `http://champion.gg/champion/${champ}`;
+
+    return screenShot(url, champ, 'build.png', () => {
       console.log('Success! Sending back the goods for ', champ);
       callback(`${champ}'s build items:\n${JSON.stringify(data.item.join(' | '))}`);
+    });
+  });
+};
+
+botCommands.gg = (name, callback) => {
+  const url = `http://na.op.gg/summoner/userName=${name}`;
+  scrapy.scrape(url, ggBuild, (err, data) => {
+    if (err) return console.error(err);
+    return screenShot(url, name, 'gg.png', () => {
+      callback(ggHelper(data.results));
     });
   });
 };
