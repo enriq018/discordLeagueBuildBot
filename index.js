@@ -4,7 +4,7 @@ const express = require('express');
 const request = require('request');
 const Discord = require('discord.js');
 const champNames = require('./champNames.js');
-const { buildSearch, gg, list, help, randomWaitPhrase } = require('./botCommands.js');
+const { buildSearch, gg, list, help, randomWaitPhrase, fifth } = require('./botCommands.js');
 
 const client = new Discord.Client();
 const app = express();
@@ -55,6 +55,8 @@ client.on('message', (message) => {
       } else if (champ === 'list') {
       /* Send back list of valid champ names */
         list(data => message.channel.send(data));
+      } else if (champ === 'fifth') {
+        fifth(data => message.channel.send(data));
       } else {
       /* Send back similarly spelt champs */
         const similarChamps = didYouMean(champ.slice(0, 2));
