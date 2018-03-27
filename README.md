@@ -2,10 +2,10 @@
 #### Ping a discord bot to display various League of Legends related information.
 
 ## Current commands include:
-* `! Champion Name` = Displays all information related to a specific champion.
-* `! list` = Prints out all current champion names.
-* `! <account name>` = Shows specific user's recent game history and stats.
-*	`! fifth` = Shows a list of users wanting to be invited to join a game.
+* `! Champion Name` Displays all information related to a specific champion.
+* `! list` Prints out all current champion names.
+* `! <account name>` Shows specific user's recent game history and stats.
+*	`! fifth` Shows a list of users wanting to be invited to join a game.
 
 
 # Examples:
