@@ -9,9 +9,11 @@
 
 
 # Examples:
+##### Getting champion info
 *`! skarner`* returns: "Enchantment: Cinderhulk | Righteous Glory | Enchantment: Cinderhulk | Adaptive Helm ...ect and an image containing all related champion info.
 ![alt text](./README_pics/champEx.png "Skarner example image")
 
+##### Getting user stats
 `! <xexplosive>` returns: xexplosive is:
 4 - 1 in last 5 games
 12 - 8 in last 20 games
