@@ -1,5 +1,5 @@
 # DiscordLeagueBuildBot
-#### Ping a discord bot to gather/display various League of Legends related information.
+#### Ping a discord bot to display various League of Legends related information.
 
 ## Current commands include:
 * `! Champion Name` = Displays all information related to a specific champion.
