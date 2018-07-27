@@ -83,6 +83,7 @@ module.exports = [
   'orianna',
   'pantheon',
   'poppy',
+  'pyke',
   'quinn',
   'rakan',
   'rammus',
@@ -135,6 +136,7 @@ module.exports = [
   'zed',
   'ziggs',
   'zilean',
+  'zoe',
   'zyra',
 ];
 
